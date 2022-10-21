@@ -8,6 +8,10 @@ android {
     namespace 'com.example.androidstudyguide'
     compileSdk 32
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.example.androidstudyguide"
         minSdk 21
