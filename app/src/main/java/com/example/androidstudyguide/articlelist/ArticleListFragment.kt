@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
 
-class ArticleListFragment: Fragment() {
+class ArticleListFragment : Fragment() {
 
     private lateinit var binding: FragmentArticleListBinding
 
