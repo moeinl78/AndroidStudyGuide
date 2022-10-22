@@ -3,8 +3,11 @@ package com.example.androidstudyguide.articlelist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.models.Articles
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ArticleListViewModel(
     articleRepository: ArticleRepository
@@ -16,7 +19,9 @@ class ArticleListViewModel(
         get() = _articles
 
     init {
-        val getArticles = articleRepository.getArticles()
-        _articles.postValue(getArticles)
+        viewModelScope.launch(Dispatchers.IO) {
+            val getArticles = articleRepository.getArticles()
+            _articles.postValue(getArticles)
+        }
     }
 }
