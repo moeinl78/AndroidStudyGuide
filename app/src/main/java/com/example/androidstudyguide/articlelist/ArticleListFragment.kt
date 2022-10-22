@@ -49,7 +49,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
             owner = this,
             factory = articleListViewModelFactory
         )
-        .get(ArticleListViewModel::class.java)
+            .get(ArticleListViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,16 +57,16 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         subscribeToViewModel()
     }
 
-    private fun subscribeToViewModel() {
-        mViewModel.articles.observe(viewLifecycleOwner) { articles ->
-            mAdapter.articles = articles
-        }
-    }
-
     override fun onArticleClicked(article: Articles) {
         val uri = Uri.parse(article.url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
+    }
+
+    private fun subscribeToViewModel() {
+        mViewModel.articles.observe(viewLifecycleOwner) { articles ->
+            mAdapter.articles = articles
+        }
     }
 
     private fun setupRecyclerView() {

@@ -4,7 +4,7 @@ import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.models.Articles
 
 class ArticleListRepositoryImp : ArticleRepository {
-    override fun getArticles(): List<Articles> {
+    override suspend fun getArticles(): List<Articles> {
         return listOf(
             Articles(
                 title = "Dependency Injection",
