@@ -19,7 +19,7 @@ class ArticleListViewModel(
         get() = _articles
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             val getArticles = articleRepository.getArticles()
             _articles.postValue(getArticles)
         }
