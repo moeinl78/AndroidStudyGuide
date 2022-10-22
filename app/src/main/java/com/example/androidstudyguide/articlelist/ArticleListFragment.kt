@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidstudyguide.data.repository.ArticleRepository
@@ -17,8 +19,15 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
 
     private lateinit var binding: FragmentArticleListBinding
     private lateinit var mAdapter: ArticleListAdapter
+    private lateinit var mViewModel: ArticleListViewModel
 
-    private val articleRepository: ArticleRepository = ArticleListRepositoryImp()
+    private val articleListViewModelFactory = object : ViewModelProvider.Factory {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            val articleRepository: ArticleRepository = ArticleListRepositoryImp()
+            return ArticleListViewModel(articleRepository = articleRepository) as T
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,9 +42,25 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        mViewModel = ViewModelProvider(
+            owner = this,
+            factory = articleListViewModelFactory
+        )
+        .get(ArticleListViewModel::class.java)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mAdapter.articles = articleRepository.getArticles()
+        subscribeToViewModel()
+    }
+
+    private fun subscribeToViewModel() {
+        mViewModel.articles.observe(viewLifecycleOwner) { articles ->
+            mAdapter.articles = articles
+        }
     }
 
     override fun onArticleClicked(article: Articles) {
