@@ -10,5 +10,5 @@ import org.simpleframework.xml.Root
 data class EssenceFeedDto(
     @field:ElementList(name = "entry", inline = true)
     @param:ElementList(name = "entry", inline = true)
-    val items: List<EssenceFeedItemDto> ?= null
+    val items: List<EssenceFeedItemDto>? = null
 )

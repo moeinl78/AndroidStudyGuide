@@ -12,10 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidstudyguide.data.remote.essence.EssenceAPI
-import com.example.androidstudyguide.data.remote.essence.EssenceArticleService
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
-import com.example.androidstudyguide.models.Articles
+import com.example.androidstudyguide.models.Article
+import com.example.androidstudyguide.utils.wrapper.Resources
+import com.google.android.material.snackbar.Snackbar
 
 class ArticleListFragment : Fragment(), ArticleClickListener {
 
@@ -26,7 +27,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private val articleListViewModelFactory = object : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            val articleRepository: ArticleRepository = EssenceArticleService(
+            val articleRepository: ArticleRepository = EssenceArticleRepository(
                 api = EssenceAPI.getInstance()
             )
             return ArticleListViewModel(articleRepository = articleRepository) as T
@@ -37,7 +38,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mAdapter = ArticleListAdapter(
             clickListener = this
         )
@@ -61,7 +62,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         subscribeToViewModel()
     }
 
-    override fun onArticleClicked(article: Articles) {
+    override fun onArticleClicked(article: Article) {
         val uri = Uri.parse(article.url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
@@ -69,7 +70,28 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
 
     private fun subscribeToViewModel() {
         mViewModel.articles.observe(viewLifecycleOwner) { articles ->
-            mAdapter.articles = articles
+            when (articles) {
+                is Resources.Success -> {
+                    articles.data?.let { items ->
+                        mAdapter.articles = items
+                        binding.fragmentArticleListProgressBar.visibility = View.GONE
+                    }
+                }
+
+                is Resources.Error -> {
+                    Snackbar.make(
+                        requireContext(),
+                        requireView(),
+                        articles.message ?: "shit!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    binding.fragmentArticleListProgressBar.visibility = View.GONE
+                }
+
+                is Resources.Loading -> {
+                    binding.fragmentArticleListProgressBar.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
