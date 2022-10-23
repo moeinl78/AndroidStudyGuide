@@ -8,6 +8,7 @@ import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.extensions.toArticle
 import com.example.androidstudyguide.utils.wrapper.Resources
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okio.IOException
 
@@ -22,9 +23,9 @@ class ArticleListViewModel(
 
     init {
         _articles.postValue(Resources.Loading())
-        viewModelScope.launch {
-            val getArticles = articleRepository.getArticles()
+        viewModelScope.launch(Dispatchers.IO) {
             try {
+                val getArticles = articleRepository.getArticles()
                 if (getArticles.isSuccessful) {
                     val res = Resources.Success(
                         getArticles.body()?.items?.map {
