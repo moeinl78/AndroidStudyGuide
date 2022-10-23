@@ -2,7 +2,6 @@ package com.example.androidstudyguide.articlelist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidstudyguide.R
 import com.example.androidstudyguide.databinding.ItemArticleListBinding
@@ -39,7 +38,7 @@ class ArticleListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindArticle(article: Articles) {
-            binding.itemArticleListTitle.text = HtmlCompat.fromHtml(article.title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            binding.itemArticleListTitle.text = article.title.getEncodedString()
             binding.itemArticleListAuthor.text = itemView.context.getString(
                 R.string.author_name,
                 article.authorName
