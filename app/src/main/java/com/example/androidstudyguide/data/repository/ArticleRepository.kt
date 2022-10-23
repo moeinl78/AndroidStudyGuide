@@ -1,7 +1,7 @@
 package com.example.androidstudyguide.data.repository
 
-import com.example.androidstudyguide.models.Articles
+import com.example.androidstudyguide.models.Article
 
 interface ArticleRepository {
-    suspend fun getArticles(): List<Articles>
+    suspend fun getArticles(): List<Article>
 }

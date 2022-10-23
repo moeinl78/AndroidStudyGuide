@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidstudyguide.data.remote.essence.EssenceAPI
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
-import com.example.androidstudyguide.models.Articles
+import com.example.androidstudyguide.models.Article
 
 class ArticleListFragment : Fragment(), ArticleClickListener {
 
@@ -60,7 +60,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         subscribeToViewModel()
     }
 
-    override fun onArticleClicked(article: Articles) {
+    override fun onArticleClicked(article: Article) {
         val uri = Uri.parse(article.url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)

@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidstudyguide.R
 import com.example.androidstudyguide.databinding.ItemArticleListBinding
-import com.example.androidstudyguide.models.Articles
+import com.example.androidstudyguide.models.Article
 
 class ArticleListAdapter(
     private val clickListener: ArticleClickListener
 ) : RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>() {
 
-    var articles: List<Articles> = emptyList()
+    var articles: List<Article> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -37,7 +37,7 @@ class ArticleListAdapter(
         private val clickListener: ArticleClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindArticle(article: Articles) {
+        fun bindArticle(article: Article) {
             binding.itemArticleListTitle.text = article.title.getEncodedString()
             binding.itemArticleListAuthor.text = itemView.context.getString(
                 R.string.author_name,

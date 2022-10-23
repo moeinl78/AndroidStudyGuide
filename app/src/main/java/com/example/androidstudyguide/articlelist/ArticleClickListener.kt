@@ -1,7 +1,7 @@
 package com.example.androidstudyguide.articlelist
 
-import com.example.androidstudyguide.models.Articles
+import com.example.androidstudyguide.models.Article
 
 interface ArticleClickListener {
-    fun onArticleClicked(article: Articles)
+    fun onArticleClicked(article: Article)
 }
