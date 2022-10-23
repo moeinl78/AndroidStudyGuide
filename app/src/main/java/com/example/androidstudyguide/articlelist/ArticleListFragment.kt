@@ -15,6 +15,8 @@ import com.example.androidstudyguide.data.remote.essence.EssenceAPI
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
 import com.example.androidstudyguide.models.Article
+import com.example.androidstudyguide.utils.wrapper.Resources
+import com.google.android.material.snackbar.Snackbar
 
 class ArticleListFragment : Fragment(), ArticleClickListener {
 
@@ -36,7 +38,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mAdapter = ArticleListAdapter(
             clickListener = this
         )
@@ -68,7 +70,28 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
 
     private fun subscribeToViewModel() {
         mViewModel.articles.observe(viewLifecycleOwner) { articles ->
-            mAdapter.articles = articles
+            when (articles) {
+                is Resources.Success -> {
+                    articles.data?.let { items ->
+                        mAdapter.articles = items
+                        binding.fragmentArticleListProgressBar.visibility = View.GONE
+                    }
+                }
+
+                is Resources.Error -> {
+                    Snackbar.make(
+                        requireContext(),
+                        requireView(),
+                        articles.message ?: "shit!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    binding.fragmentArticleListProgressBar.visibility = View.GONE
+                }
+
+                is Resources.Loading -> {
+                    binding.fragmentArticleListProgressBar.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
