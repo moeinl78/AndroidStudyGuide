@@ -8,7 +8,7 @@ class EssenceArticleService(
     private val api: EssenceAPI
 ) : ArticleRepository {
     override suspend fun getArticles(): List<Articles> {
-        return api.getFeed().items.map { it.toArticle() }
+        return api.getFeed().items!!.map { it.toArticle() }
     }
 }
 
@@ -16,6 +16,6 @@ private fun EssenceFeedItemDto.toArticle(): Articles {
     return Articles(
         title = this.title,
         authorName = this.author.name,
-        url = this.url
+        url = this.link.href
     )
 }
