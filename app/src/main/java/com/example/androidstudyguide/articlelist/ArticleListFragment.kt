@@ -16,7 +16,7 @@ import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
 import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.extensions.visibleIf
-import com.example.androidstudyguide.utils.wrapper.Resources
+import com.example.androidstudyguide.utils.wrapper.ViewState
 import com.google.android.material.snackbar.Snackbar
 
 class ArticleListFragment : Fragment(), ArticleClickListener {
@@ -70,27 +70,29 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     }
 
     private fun subscribeToViewModel() {
-        mViewModel.articles.observe(viewLifecycleOwner) { articles ->
-            when (articles) {
-                is Resources.Success -> {
-                    articles.data?.let { items ->
-                        mAdapter.articles = items
-                        binding.fragmentArticleListProgressBar.visibleIf(false)
-                    }
+        mViewModel.state.observe(viewLifecycleOwner) { viewState ->
+            when (viewState) {
+                is ViewState.Success -> {
+                    mAdapter.articles = viewState.articles
+                    binding.fragmentArticleListProgressBar.visibleIf(condition = false)
                 }
 
-                is Resources.Error -> {
+                is ViewState.Error -> {
                     Snackbar.make(
                         requireContext(),
                         requireView(),
-                        articles.message ?: "shit!",
+                        viewState.error.message ?: "",
                         Snackbar.LENGTH_LONG
                     ).show()
-                    binding.fragmentArticleListProgressBar.visibleIf(false)
+                    binding.fragmentArticleListProgressBar.visibleIf(condition = false)
                 }
 
-                is Resources.Loading -> {
-                    binding.fragmentArticleListProgressBar.visibleIf(true)
+                is ViewState.Loading -> {
+                    binding.fragmentArticleListProgressBar.visibleIf(condition = true)
+                }
+
+                is ViewState.Empty -> {
+                    binding.fragmentArticleListProgressBar.visibleIf(false)
                 }
             }
         }
