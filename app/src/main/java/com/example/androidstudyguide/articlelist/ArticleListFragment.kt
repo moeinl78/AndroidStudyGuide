@@ -15,6 +15,7 @@ import com.example.androidstudyguide.data.remote.essence.EssenceAPI
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
 import com.example.androidstudyguide.models.Article
+import com.example.androidstudyguide.utils.extensions.visibleIf
 import com.example.androidstudyguide.utils.wrapper.Resources
 import com.google.android.material.snackbar.Snackbar
 
@@ -74,7 +75,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
                 is Resources.Success -> {
                     articles.data?.let { items ->
                         mAdapter.articles = items
-                        binding.fragmentArticleListProgressBar.visibility = View.GONE
+                        binding.fragmentArticleListProgressBar.visibleIf(false)
                     }
                 }
 
@@ -85,11 +86,11 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
                         articles.message ?: "shit!",
                         Snackbar.LENGTH_LONG
                     ).show()
-                    binding.fragmentArticleListProgressBar.visibility = View.GONE
+                    binding.fragmentArticleListProgressBar.visibleIf(false)
                 }
 
                 is Resources.Loading -> {
-                    binding.fragmentArticleListProgressBar.visibility = View.VISIBLE
+                    binding.fragmentArticleListProgressBar.visibleIf(true)
                 }
             }
         }
