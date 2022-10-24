@@ -4,6 +4,6 @@ import com.example.androidstudyguide.utils.EncodeString
 
 data class Article(
     val title: EncodeString,
-    val authorName: String,
-    val url: String
+    val authorName: String = "",
+    val url: String = ""
 )
