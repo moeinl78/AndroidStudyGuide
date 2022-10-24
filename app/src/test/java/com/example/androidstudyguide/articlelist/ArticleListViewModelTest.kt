@@ -4,9 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.EncodeString
 import com.example.androidstudyguide.utils.wrapper.ViewState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class ArticleListViewModelTest {
 
     private val testRobot = ArticleListViewModelTestRobot()
@@ -25,7 +27,10 @@ class ArticleListViewModelTest {
 
         testRobot
             .buildViewModel()
-            .mockArticles(testArticles)
+            .assertViewState(
+                expectedViewState = ViewState.Loading
+            )
+            .emitArticles(testArticles)
             .assertViewState(
                 expectedViewState = ViewState.Loading
             )

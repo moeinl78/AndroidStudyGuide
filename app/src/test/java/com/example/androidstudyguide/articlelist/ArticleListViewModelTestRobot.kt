@@ -10,8 +10,8 @@ class ArticleListViewModelTestRobot {
     private lateinit var viewModel: ArticleListViewModel
     private val fakesArticleRepository = FakesArticleRepository()
 
-    fun mockArticles(articles: List<Article>) = apply {
-        fakesArticleRepository.setMockedArticles(articles)
+    fun emitArticles(articles: List<Article>) = apply {
+        fakesArticleRepository.emitArticles(articles)
     }
 
     fun buildViewModel() = apply {
