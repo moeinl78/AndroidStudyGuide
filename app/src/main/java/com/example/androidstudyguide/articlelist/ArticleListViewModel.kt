@@ -26,16 +26,8 @@ class ArticleListViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val getArticles = articleRepository.getArticles()
-                if (getArticles.isSuccessful) {
-                    val res = Resources.Success(
-                        getArticles.body()?.items?.map {
-                            it.toArticle()
-                        }
-                    )
-                    _articles.postValue(res)
-                } else {
-                    _articles.postValue(Resources.Error("Failed to fetch data from network!"))
-                }
+                val res = Resources.Success(getArticles)
+                _articles.postValue(res)
             } catch (ioException: IOException) {
                 _articles.postValue(Resources.Error("Please check your network connection!"))
             }

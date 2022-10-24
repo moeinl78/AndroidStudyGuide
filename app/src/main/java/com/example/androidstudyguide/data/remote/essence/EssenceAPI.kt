@@ -11,7 +11,7 @@ import retrofit2.http.GET
 interface EssenceAPI {
 
     @GET("feed.xml")
-    suspend fun getFeed(): Response<EssenceFeedDto>
+    suspend fun getFeed(): EssenceFeedDto
 
     companion object {
         private const val BASE_URL = "https://androidessence.com/"
