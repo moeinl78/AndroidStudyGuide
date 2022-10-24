@@ -94,6 +94,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
                 is ViewState.Empty -> {
                     binding.fragmentArticleListProgressBar.visibleIf(false)
                 }
+                }
             }
         }
     }
