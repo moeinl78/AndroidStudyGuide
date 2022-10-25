@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.utils.wrapper.DataResponse
 import com.example.androidstudyguide.utils.wrapper.ViewState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ArticleListViewModel(
