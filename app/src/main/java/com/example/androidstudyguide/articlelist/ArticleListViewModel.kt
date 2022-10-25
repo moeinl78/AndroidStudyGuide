@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidstudyguide.data.repository.ArticleRepository
+import com.example.androidstudyguide.utils.wrapper.DataResponse
 import com.example.androidstudyguide.utils.wrapper.ViewState
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okio.IOException
 
 class ArticleListViewModel(
     articleRepository: ArticleRepository
@@ -20,14 +19,13 @@ class ArticleListViewModel(
         get() = _state
 
     init {
-        _state.postValue(ViewState.Loading)
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val getArticles = articleRepository.getArticles()
-                val res = ViewState.Success(getArticles)
-                _state.postValue(res)
-            } catch (ioException: IOException) {
-                _state.postValue(ViewState.Error(error = Throwable("Please check your network connection!")))
+        viewModelScope.launch {
+            _state.value = ViewState.Loading
+
+            val response = articleRepository.getArticles()
+            _state.value = when (response) {
+                is DataResponse.Success -> ViewState.Success(response.data)
+                is DataResponse.Error -> ViewState.Error(response.error)
             }
         }
     }

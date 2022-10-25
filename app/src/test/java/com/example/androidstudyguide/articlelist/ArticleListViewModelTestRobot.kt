@@ -14,6 +14,10 @@ class ArticleListViewModelTestRobot {
         fakesArticleRepository.emitArticles(articles)
     }
 
+    fun emitFailure(error: Throwable) = apply {
+        fakesArticleRepository.emitFailure(error)
+    }
+
     fun buildViewModel() = apply {
         viewModel = ArticleListViewModel(
             articleRepository = fakesArticleRepository

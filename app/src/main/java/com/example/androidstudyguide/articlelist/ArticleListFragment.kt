@@ -71,30 +71,20 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
 
     private fun subscribeToViewModel() {
         mViewModel.state.observe(viewLifecycleOwner) { viewState ->
-            when (viewState) {
-                is ViewState.Success -> {
-                    mAdapter.articles = viewState.articles
-                    binding.fragmentArticleListProgressBar.visibleIf(condition = false)
-                }
+            binding.fragmentArticleListProgressBar.visibleIf(viewState is ViewState.Loading)
+            binding.fragmentArticleListRecycler.visibleIf(viewState is ViewState.Success)
 
-                is ViewState.Error -> {
-                    Snackbar.make(
-                        requireContext(),
-                        requireView(),
-                        viewState.error.message ?: "",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    binding.fragmentArticleListProgressBar.visibleIf(condition = false)
-                }
+            if (viewState is ViewState.Success) {
+                mAdapter.articles = viewState.articles
+            }
 
-                is ViewState.Loading -> {
-                    binding.fragmentArticleListProgressBar.visibleIf(condition = true)
-                }
-
-                is ViewState.Empty -> {
-                    binding.fragmentArticleListProgressBar.visibleIf(false)
-                }
-                }
+            if (viewState is ViewState.Error) {
+                Snackbar.make(
+                    requireContext(),
+                    requireView(),
+                    viewState.error.message ?: "Something went wrong!",
+                    Snackbar.LENGTH_LONG
+                ).show()
             }
         }
     }
