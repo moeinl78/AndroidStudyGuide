@@ -1,9 +1,8 @@
 package com.example.androidstudyguide.data.repository
 
-import com.example.androidstudyguide.data.remote.essence.dto.EssenceFeedDto
 import com.example.androidstudyguide.models.Article
-import retrofit2.Response
+import com.example.androidstudyguide.utils.wrapper.DataResponse
 
 interface ArticleRepository {
-    suspend fun getArticles(): List<Article>
+    suspend fun getArticles(): DataResponse<List<Article>>
 }
