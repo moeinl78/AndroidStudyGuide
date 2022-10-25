@@ -20,8 +20,8 @@ class ArticleListViewModel(
         get() = _state
 
     init {
-        _state.postValue(ViewState.Loading)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
+            _state.value = ViewState.Loading
 
             val response = articleRepository.getArticles()
             _state.value = when (response) {
