@@ -65,4 +65,32 @@ class ArticleListViewModelTest {
                 expectedViewState = ViewState.Error(networkFailure)
             )
     }
+
+    @Test
+    fun retryAfterFailure() {
+        val networkFailure = Throwable("Network Error!")
+        val testArticles = listOf(
+            Article(
+                title = EncodeString("Testing title")
+            )
+        )
+
+        testRobot
+            .buildViewModel()
+            .assertViewState(
+                expectedViewState = ViewState.Loading
+            )
+            .emitFailure(networkFailure)
+            .assertViewState(
+                expectedViewState = ViewState.Error(networkFailure)
+            )
+            .retryFetch()
+            .assertViewState(
+                expectedViewState = ViewState.Loading
+            )
+            .emitArticles(testArticles)
+            .assertViewState(
+                expectedViewState = ViewState.Success(testArticles)
+            )
+    }
 }
