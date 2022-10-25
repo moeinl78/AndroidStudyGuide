@@ -18,6 +18,10 @@ class ArticleListViewModelTestRobot {
         fakesArticleRepository.emitFailure(error)
     }
 
+    fun retryFetch() = apply {
+        viewModel.retryFetch()
+    }
+
     fun buildViewModel() = apply {
         viewModel = ArticleListViewModel(
             articleRepository = fakesArticleRepository
