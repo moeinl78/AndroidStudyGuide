@@ -3,14 +3,17 @@ package com.example.androidstudyguide.articlelist
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.androidstudyguide.R
 import com.example.androidstudyguide.data.remote.essence.EssenceAPI
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
@@ -83,8 +86,14 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
                     requireContext(),
                     requireView(),
                     viewState.error.message ?: "Something went wrong!",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                    Snackbar.LENGTH_INDEFINITE
+                )
+                    .setAction("Retry") {
+                        mViewModel.retryFetch()
+                    }
+                    .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+                    .show()
             }
         }
     }

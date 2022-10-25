@@ -10,7 +10,7 @@ import com.example.androidstudyguide.utils.wrapper.ViewState
 import kotlinx.coroutines.launch
 
 class ArticleListViewModel(
-    articleRepository: ArticleRepository
+    private val articleRepository: ArticleRepository
 ) : ViewModel() {
 
     private val _state = MutableLiveData<ViewState>()
@@ -19,6 +19,14 @@ class ArticleListViewModel(
         get() = _state
 
     init {
+        fetchArticlesFromRepository()
+    }
+
+    fun retryFetch() {
+        fetchArticlesFromRepository()
+    }
+
+    private fun fetchArticlesFromRepository() {
         viewModelScope.launch {
             _state.value = ViewState.Loading
 
