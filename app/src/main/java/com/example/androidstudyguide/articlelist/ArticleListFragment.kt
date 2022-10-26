@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidstudyguide.R
-import com.example.androidstudyguide.data.remote.essence.EssenceAPI
 import com.example.androidstudyguide.data.repository.ArticleRepository
 import com.example.androidstudyguide.databinding.FragmentArticleListBinding
+import com.example.androidstudyguide.dependencyGraph
 import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.extensions.visibleIf
 import com.example.androidstudyguide.utils.wrapper.ViewState
@@ -30,9 +30,9 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private val articleListViewModelFactory = object : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            val articleRepository: ArticleRepository = EssenceArticleRepository(
-                api = EssenceAPI.getInstance()
-            )
+            val articleRepository: ArticleRepository =
+                requireContext().dependencyGraph().dataGraph.articleRepository
+
             return ArticleListViewModel(articleRepository = articleRepository) as T
         }
     }
