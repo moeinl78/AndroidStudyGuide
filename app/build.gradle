@@ -74,6 +74,9 @@ dependencies {
 
     // LOTTIE ANIMATION
     implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // DEPENDENCY INJECTION - KOIN
+    implementation "io.insert-koin:koin-android:3.3.0"
 }
 
 ktlint {
