@@ -5,6 +5,7 @@ package com.example.androidstudyguide.di
  */
 interface DependencyGraph {
     val dataGraph: DataGraph
+    val viewModelFactoryGraph: ViewModelFactoryGraph
 }
 
 /**
@@ -12,4 +13,5 @@ interface DependencyGraph {
  */
 class BaseDependencyGraph : DependencyGraph {
     override val dataGraph: DataGraph = NetworkDataGraph()
+    override val viewModelFactoryGraph: ViewModelFactoryGraph = BaseViewModelFactoryGraph(dataGraph)
 }

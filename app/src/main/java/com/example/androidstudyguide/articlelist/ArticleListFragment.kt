@@ -27,16 +27,6 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     private lateinit var mAdapter: ArticleListAdapter
     private lateinit var mViewModel: ArticleListViewModel
 
-    private val articleListViewModelFactory = object : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            val articleRepository: ArticleRepository =
-                requireContext().dependencyGraph().dataGraph.articleRepository
-
-            return ArticleListViewModel(articleRepository = articleRepository) as T
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,10 +42,14 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val mViewModelFactory = requireContext()
+            .dependencyGraph()
+            .viewModelFactoryGraph
+            .getArticleListViewModelFactory()
 
         mViewModel = ViewModelProvider(
             owner = this,
-            factory = articleListViewModelFactory
+            factory = mViewModelFactory
         )
             .get(ArticleListViewModel::class.java)
     }
