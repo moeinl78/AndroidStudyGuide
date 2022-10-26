@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jlleitschuh.gradle.ktlint'
     id 'io.gitlab.arturbosch.detekt'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -74,6 +76,14 @@ dependencies {
 
     // LOTTIE ANIMATION
     implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // DEPENDENCY INJECTION - HILT
+    implementation 'com.google.dagger:hilt-android:2.44'
+    kapt 'com.google.dagger:hilt-android-compiler:2.44'
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 ktlint {
