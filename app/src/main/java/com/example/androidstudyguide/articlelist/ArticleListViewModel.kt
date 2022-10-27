@@ -35,7 +35,15 @@ class ArticleListViewModel @Inject constructor(
     }
 
     fun bookmarkClicked(article: Article) {
-        // TODO implement the way bookmark icon supposed to work.
+        val currentArticles = (_state.value as? ViewState.Success)?.articles.orEmpty()
+        val updatedArticles = currentArticles.map { item ->
+            if (item.title == article.title) {
+                item.copy(bookmarked = !item.bookmarked)
+            } else {
+                item
+            }
+        }
+        _state.value = ViewState.Success(updatedArticles)
     }
 
     private fun fetchArticlesFromRepository() {
