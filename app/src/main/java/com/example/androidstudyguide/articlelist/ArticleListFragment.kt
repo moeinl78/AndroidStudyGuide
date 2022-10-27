@@ -52,6 +52,7 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
     }
 
     override fun onArticleBookmarkClicked(article: Article) {
+        mViewModel.bookmarkClicked(article)
     }
 
     private fun subscribeToViewModel() {
