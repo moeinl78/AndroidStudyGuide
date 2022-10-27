@@ -48,8 +48,20 @@ class ArticleListAdapter(
                 article.authorName
             )
 
+            val bookmarkIcon = if (article.bookmarked) {
+                R.drawable.ic_baseline_bookmark_24
+            } else {
+                R.drawable.ic_baseline_bookmark_border_24
+            }
+
+            binding.itemArticleListBookmarkIcon.setImageResource(bookmarkIcon)
+
             itemView.setOnClickListener {
                 clickListener.onArticleClicked(article)
+            }
+
+            binding.itemArticleListBookmarkIcon.setOnClickListener {
+                clickListener.onArticleBookmarkClicked(article, adapterPosition)
             }
         }
     }

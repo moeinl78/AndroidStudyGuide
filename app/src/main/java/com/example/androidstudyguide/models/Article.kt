@@ -8,9 +8,11 @@ import com.example.androidstudyguide.utils.EncodeString
  * [EncodeString] class to do the necessary decoding before displaying the text on the UI.
  * @property[authorName] This is the name of the person who wrote the article
  * @property[url] This is the web address for this article.
+ * @property[bookmarked] if user saved an article or not.
  */
 data class Article(
     val title: EncodeString,
     val authorName: String = "",
-    val url: String = ""
+    val url: String = "",
+    var bookmarked: Boolean = false
 )

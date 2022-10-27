@@ -93,4 +93,29 @@ class ArticleListViewModelTest {
                 expectedViewState = ViewState.Success(testArticles)
             )
     }
+
+    @Test
+    fun bookmarkArticle() {
+        val article = Article(
+            title = EncodeString("Testing title")
+        )
+
+        val bookmarkedArticle = article.copy(bookmarked = true)
+
+        testRobot
+            .buildViewModel()
+            .assertViewState(
+                expectedViewState = ViewState.Loading
+            )
+            .emitArticles(listOf(article))
+            .assertViewState(
+                expectedViewState = ViewState.Success(listOf(article))
+            )
+            .bookmarkClicked(
+                article
+            )
+            .assertViewState(
+                expectedViewState = ViewState.Success(listOf(bookmarkedArticle))
+            )
+    }
 }

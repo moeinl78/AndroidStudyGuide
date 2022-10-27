@@ -50,6 +50,12 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
+
+    override fun onArticleBookmarkClicked(article: Article, position: Int) {
+        val item = mViewModel.bookmarkClicked(article)
+        mAdapter.notifyItemChanged(position, item)
+    }
+
     private fun subscribeToViewModel() {
         mViewModel.state.observe(viewLifecycleOwner) { viewState ->
             binding.fragmentArticleListProgressBar.visibleIf(viewState is ViewState.Loading)

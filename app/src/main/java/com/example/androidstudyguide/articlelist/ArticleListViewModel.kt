@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.androidstudyguide.data.repository.ArticleRepository
+import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.wrapper.DataResponse
 import com.example.androidstudyguide.utils.wrapper.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +32,13 @@ class ArticleListViewModel @Inject constructor(
 
     fun retryFetch() {
         fetchArticlesFromRepository()
+    }
+
+    fun bookmarkClicked(article: Article): Article {
+        article.apply {
+            bookmarked = !article.bookmarked
+        }
+        return article
     }
 
     private fun fetchArticlesFromRepository() {
