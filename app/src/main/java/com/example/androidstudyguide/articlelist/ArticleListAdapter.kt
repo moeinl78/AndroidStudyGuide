@@ -51,6 +51,10 @@ class ArticleListAdapter(
             itemView.setOnClickListener {
                 clickListener.onArticleClicked(article)
             }
+
+            binding.itemArticleListBookmarkIcon.setOnClickListener {
+                clickListener.onArticleBookmarkClicked(article)
+            }
         }
     }
 }
