@@ -22,6 +22,10 @@ class ArticleListViewModelTestRobot {
         viewModel.retryFetch()
     }
 
+    fun bookmarkClicked(article: Article) = apply {
+        viewModel.bookmarkClicked(article)
+    }
+
     fun buildViewModel() = apply {
         viewModel = ArticleListViewModel(
             articleRepository = fakesArticleRepository
