@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AndroidStudyGuide</string>
     <string name="author_name"> By %s </string>
+    <string name="bookmark">Bookmark Article</string>
 </resources>
