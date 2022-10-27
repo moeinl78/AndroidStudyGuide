@@ -12,6 +12,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 
+/**
+ * This is a Dagger-Hilt [Module] that defines how to create instances of any data
+ * related dependencies.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {

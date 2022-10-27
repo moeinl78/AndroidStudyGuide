@@ -7,6 +7,10 @@ import com.example.androidstudyguide.R
 import com.example.androidstudyguide.databinding.ItemArticleListBinding
 import com.example.androidstudyguide.models.Article
 
+/**
+ * An adapter class that takes list of [Article] and
+ * binds them to the related layout & includes an item click listener [ArticleClickListener]
+ */
 class ArticleListAdapter(
     private val clickListener: ArticleClickListener
 ) : RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>() {

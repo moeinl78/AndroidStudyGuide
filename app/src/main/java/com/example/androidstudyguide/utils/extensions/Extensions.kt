@@ -5,6 +5,9 @@ import com.example.androidstudyguide.data.remote.essence.dto.EssenceFeedItemDto
 import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.EncodeString
 
+/**
+ * An extension function to convert [EssenceFeedItemDto] to an [Article].
+ */
 fun EssenceFeedItemDto.toArticle(): Article {
     return Article(
         title = EncodeString(this.title),
@@ -13,6 +16,9 @@ fun EssenceFeedItemDto.toArticle(): Article {
     )
 }
 
+/**
+ * Configures the visibility of a [View] to visible or gone base on the supplied [condition].
+ */
 fun View.visibleIf(condition: Boolean) {
     this.visibility = if (condition) {
         View.VISIBLE

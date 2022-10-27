@@ -11,6 +11,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * This class is responsible for requesting articles from the [articleRepository] and mapping
+ * those requests into a [ViewState] which is then can be observerd through our [state] Livedata.
+ */
 @HiltViewModel
 class ArticleListViewModel @Inject constructor(
     private val articleRepository: ArticleRepository

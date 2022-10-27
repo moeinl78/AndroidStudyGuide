@@ -6,6 +6,9 @@ import com.example.androidstudyguide.models.Article
 import com.example.androidstudyguide.utils.extensions.toArticle
 import com.example.androidstudyguide.utils.wrapper.DataResponse
 
+/**
+ * This networking service will request [Article] entities from the Remote Repository.
+ */
 class EssenceArticleRepository(
     private val api: EssenceAPI
 ) : ArticleRepository {
