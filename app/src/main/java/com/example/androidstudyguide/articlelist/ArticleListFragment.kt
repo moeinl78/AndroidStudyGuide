@@ -51,8 +51,9 @@ class ArticleListFragment : Fragment(), ArticleClickListener {
         startActivity(intent)
     }
 
-    override fun onArticleBookmarkClicked(article: Article) {
-        mViewModel.bookmarkClicked(article)
+    override fun onArticleBookmarkClicked(article: Article, position: Int) {
+        val item = mViewModel.bookmarkClicked(article)
+        mAdapter.notifyItemChanged(position, item)
     }
 
     private fun subscribeToViewModel() {

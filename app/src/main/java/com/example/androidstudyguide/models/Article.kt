@@ -14,5 +14,5 @@ data class Article(
     val title: EncodeString,
     val authorName: String = "",
     val url: String = "",
-    val bookmarked: Boolean = false
+    var bookmarked: Boolean = false
 )

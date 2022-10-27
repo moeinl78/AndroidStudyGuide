@@ -4,5 +4,5 @@ import com.example.androidstudyguide.models.Article
 
 interface ArticleClickListener {
     fun onArticleClicked(article: Article)
-    fun onArticleBookmarkClicked(article: Article)
+    fun onArticleBookmarkClicked(article: Article, position: Int)
 }

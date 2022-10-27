@@ -34,16 +34,11 @@ class ArticleListViewModel @Inject constructor(
         fetchArticlesFromRepository()
     }
 
-    fun bookmarkClicked(article: Article) {
-        val currentArticles = (_state.value as? ViewState.Success)?.articles.orEmpty()
-        val updatedArticles = currentArticles.map { item ->
-            if (item.title == article.title) {
-                item.copy(bookmarked = !item.bookmarked)
-            } else {
-                item
-            }
+    fun bookmarkClicked(article: Article): Article {
+        article.apply {
+            bookmarked = !article.bookmarked
         }
-        _state.value = ViewState.Success(updatedArticles)
+        return article
     }
 
     private fun fetchArticlesFromRepository() {
